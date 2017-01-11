@@ -16,7 +16,10 @@ import com.baurine.multitypeadaptersample.item.EmptyItem;
 import com.baurine.multitypeadaptersample.item.ErrorItem;
 import com.baurine.multitypeadaptersample.item.FooterItem;
 import com.baurine.multitypeadaptersample.item.HeaderItem;
+import com.baurine.multitypeadaptersample.item.ImageItem;
+import com.baurine.multitypeadaptersample.item.TextItem;
 import com.baurine.multitypeadaptersample.model.Faker;
+import com.baurine.multitypeadaptersample.util.CommonUtil;
 
 import java.util.Random;
 
@@ -88,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 if (hasMoreData &&
                         !loading &&
                         newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        adapter.getItemCount() > PER_PAGE_COUNT &&
+                        // here the threshold depends on your actual situation
+                        // adapter.getItemCount() > PER_PAGE_COUNT &&
+                        adapter.getItemCount() > 2 &&
                         llm.findLastVisibleItemPosition() >= adapter.getItemCount() - 1) {
                     loading = true;
                     fetchData(true);
@@ -142,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         }, 3000);
     }
 
-    public void retrieveItems(boolean loadMore) {
+    private void retrieveItems(boolean loadMore) {
         // result = 0, network error
         // result = 1, empty or last page data
         // result = 2 and other, normal result
@@ -152,10 +157,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (resultType == 1) {
             if (loadMore) {
                 hasMoreData = false;
-
-                for (int i = 0; i < PER_PAGE_COUNT / 2; i++) {
-                    adapter.addItem(Faker.fakeModel(i % 2).createItem());
-                }
+                addDataItems(PER_PAGE_COUNT / 2);
                 // here depends whether you want to display no more data state
                 // if you don't want to display this state when has no more data
                 // then just don't add it back
@@ -164,11 +166,61 @@ public class MainActivity extends AppCompatActivity {
                 adapter.addItem(emptyItem);
             }
         } else {
-            for (int i = 0; i < PER_PAGE_COUNT; i++) {
-                adapter.addItem(Faker.fakeModel(i % 2).createItem());
-            }
+            addDataItems(PER_PAGE_COUNT);
             // pre-display loading state to improve user experience
             adapter.addItem(footerItem.setState(FooterItem.LOADING));
+        }
+    }
+
+    private void addDataItems(int count) {
+        for (int i = 0; i < count; i++) {
+            final MultiTypeAdapter.IItemType item = Faker.fakeModel(i % 2).createItem();
+            if (item instanceof ImageItem) {
+                final ImageItem imageItem = (ImageItem) item;
+                imageItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.tv_like:
+                                imageItem.toggleLiked();
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_hide:
+                                adapter.removeItem(item);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_comment:
+                                CommonUtil.showToast(view.getContext(),
+                                        "TODO: comment image, id: " +
+                                                String.valueOf(imageItem.getId()));
+                                break;
+                        }
+                    }
+                });
+            } else if (item instanceof TextItem) {
+                final TextItem textItem = (TextItem) item;
+                textItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.tv_like:
+                                textItem.toggleLiked();
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_hide:
+                                adapter.removeItem(item);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_comment:
+                                CommonUtil.showToast(view.getContext(),
+                                        "TODO: comment text, id: " +
+                                                String.valueOf(textItem.getId()));
+                                break;
+                        }
+                    }
+                });
+            }
+            adapter.addItem(item);
         }
     }
 }

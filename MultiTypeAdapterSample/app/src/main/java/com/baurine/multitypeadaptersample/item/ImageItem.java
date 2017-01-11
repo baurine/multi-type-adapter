@@ -1,14 +1,13 @@
 package com.baurine.multitypeadaptersample.item;
 
 import com.baurine.multitypeadaptersample.R;
-import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.model.ImageModel;
 
 /**
  * Created by baurine on 1/10/17.
  */
 
-public class ImageItem implements MultiTypeAdapter.IItemType {
+public class ImageItem extends BaseItem {
     @Override
     public int getType() {
         return R.layout.item_image;
@@ -28,5 +27,13 @@ public class ImageItem implements MultiTypeAdapter.IItemType {
 
     public boolean isLiked() {
         return imageModel.liked;
+    }
+
+    public int getId() {
+        return imageModel.id;
+    }
+
+    public void toggleLiked() {
+        imageModel.liked = !imageModel.liked;
     }
 }

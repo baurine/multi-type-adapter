@@ -37,7 +37,8 @@
 
                 <include
                     layout="@layout/include_actions"
-                    app:liked="@{item.liked}"/>
+                    app:liked="@{item.liked}"
+                    app:onClickListener="@{item.onClickListener}"/>
 
             </LinearLayout>
         </FrameLayout>

@@ -1,13 +1,12 @@
 package com.baurine.multitypeadaptersample.item;
 
 import com.baurine.multitypeadaptersample.R;
-import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 
 /**
  * Created by baurine on 1/10/17.
  */
 
-public class HeaderItem implements MultiTypeAdapter.IItemType {
+public class HeaderItem extends BaseItem {
     @Override
     public int getType() {
         return R.layout.item_header;
