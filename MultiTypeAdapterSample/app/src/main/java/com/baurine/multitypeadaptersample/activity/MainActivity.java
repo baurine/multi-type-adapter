@@ -16,8 +16,7 @@ import com.baurine.multitypeadaptersample.item.EmptyItem;
 import com.baurine.multitypeadaptersample.item.ErrorItem;
 import com.baurine.multitypeadaptersample.item.FooterItem;
 import com.baurine.multitypeadaptersample.item.HeaderItem;
-import com.baurine.multitypeadaptersample.item.ImageItem;
-import com.baurine.multitypeadaptersample.item.TextItem;
+import com.baurine.multitypeadaptersample.model.Faker;
 
 import java.util.Random;
 
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 hasMoreData = false;
 
                 for (int i = 0; i < PER_PAGE_COUNT / 2; i++) {
-                    adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
+                    adapter.addItem(Faker.fakeModel(i % 2).createItem());
                 }
                 // here depends whether you want to display no more data state
                 // if you don't want to display this state when has no more data
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             for (int i = 0; i < PER_PAGE_COUNT; i++) {
-                adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
+                adapter.addItem(Faker.fakeModel(i % 2).createItem());
             }
             // pre-display loading state to improve user experience
             adapter.addItem(footerItem.setState(FooterItem.LOADING));
