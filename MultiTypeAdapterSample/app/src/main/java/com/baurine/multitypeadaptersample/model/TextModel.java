@@ -37,6 +37,6 @@ public class TextModel extends BaseModel {
     public TextModel() {
         super();
         content = TOXIC_SOUP[(new Random()).nextInt(1000) % TOXIC_SOUP.length];
-        liked = false;
+        liked = (new Random()).nextBoolean();
     }
 }

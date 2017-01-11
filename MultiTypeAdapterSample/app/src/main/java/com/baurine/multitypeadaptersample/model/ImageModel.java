@@ -22,7 +22,7 @@ public class ImageModel extends BaseModel {
     public ImageModel() {
         super();
         url = "https://unsplash.it/200/200?random&" + new Random().nextInt(40);
-        liked = false;
+        liked = (new Random()).nextBoolean();
     }
 
 }

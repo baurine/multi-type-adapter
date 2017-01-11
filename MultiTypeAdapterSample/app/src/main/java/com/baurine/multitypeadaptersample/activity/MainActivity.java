@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         // result = 0, network error
         // result = 1, empty or last page data
         // result = 2 and other, normal result
-        int resultType = (new Random()).nextInt(100) % 4;
+        int resultType = (new Random()).nextInt(100) % 6;
         if (resultType == 0) {
             adapter.addItem(loadMore ? footerItem.setState(FooterItem.ERROR) : errorItem);
         } else if (resultType == 1) {

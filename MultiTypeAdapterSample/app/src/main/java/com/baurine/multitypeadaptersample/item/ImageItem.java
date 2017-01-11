@@ -25,4 +25,8 @@ public class ImageItem implements MultiTypeAdapter.IItemType {
     public String getUrl() {
         return imageModel.url;
     }
+
+    public boolean isLiked() {
+        return imageModel.liked;
+    }
 }

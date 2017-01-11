@@ -3,6 +3,7 @@ package com.baurine.multitypeadaptersample.item;
 import com.baurine.multitypeadaptersample.R;
 import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.model.TextModel;
+import com.baurine.multitypeadaptersample.util.DateFormatUtil;
 
 /**
  * Created by baurine on 1/10/17.
@@ -23,6 +24,10 @@ public class TextItem implements MultiTypeAdapter.IItemType {
     }
 
     public String getText() {
-        return textModel.content;
+        return DateFormatUtil.formatTime(textModel.createdAt) + " - " + textModel.content;
+    }
+
+    public boolean isLiked() {
+        return textModel.liked;
     }
 }
