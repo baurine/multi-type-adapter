@@ -8,8 +8,10 @@ public class Faker {
     public static BaseModel fakeModel(int type) {
         if (type == 0) {
             return new ImageModel();
-        } else {
+        } else if (type == 1) {
             return new TextModel();
+        } else {
+            return new FollowerModel();
         }
     }
 }

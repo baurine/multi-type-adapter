@@ -14,6 +14,7 @@ import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.databinding.ActivityMainBinding;
 import com.baurine.multitypeadaptersample.item.EmptyItem;
 import com.baurine.multitypeadaptersample.item.ErrorItem;
+import com.baurine.multitypeadaptersample.item.FollowerItem;
 import com.baurine.multitypeadaptersample.item.FooterItem;
 import com.baurine.multitypeadaptersample.item.HeaderItem;
 import com.baurine.multitypeadaptersample.item.ImageItem;
@@ -147,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 retrieveItems(loadMore);
                 adapter.notifyDataSetChanged();
             }
-        }, 3000);
+        }, 2000);
     }
 
     private void retrieveItems(boolean loadMore) {
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDataItems(int count) {
         for (int i = 0; i < count; i++) {
-            final MultiTypeAdapter.IItemType item = Faker.fakeModel(i % 2).createItem();
+            final MultiTypeAdapter.IItemType item = Faker.fakeModel(i % 3).createItem();
             if (item instanceof ImageItem) {
                 final ImageItem imageItem = (ImageItem) item;
                 imageItem.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +225,15 @@ public class MainActivity extends AppCompatActivity {
                                                 String.valueOf(textItem.getId()));
                                 break;
                         }
+                    }
+                });
+            } else if (item instanceof FollowerItem) {
+                final FollowerItem followerItem = (FollowerItem) item;
+                followerItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        followerItem.toggleFollowed();
+                        adapter.notifyItemChanged(adapter.findPos(followerItem));
                     }
                 });
             }

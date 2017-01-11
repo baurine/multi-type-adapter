@@ -20,10 +20,4 @@ public abstract class BaseItem implements MultiTypeAdapter.IItemType {
     public void setOnClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
-
-    public void onClick(View view) {
-        if (onClickListener != null) {
-            onClickListener.onClick(view);
-        }
-    }
 }
