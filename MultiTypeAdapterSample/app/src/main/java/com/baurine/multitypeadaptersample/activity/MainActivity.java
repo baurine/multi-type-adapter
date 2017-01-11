@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean refreshing = false;
     private boolean loading = false;
     private boolean hasMoreData = true;
-    private final int PER_PAGE_COUNT = 8;
+    private static final int PER_PAGE_COUNT = 8;
 
     private MultiTypeAdapter adapter = new MultiTypeAdapter();
     private HeaderItem headerItem = new HeaderItem();
@@ -51,18 +51,20 @@ public class MainActivity extends AppCompatActivity {
         emptyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.removeItem(emptyItem);
+                // adapter.removeItem(emptyItem);
                 // adapter.notifyDataSetChanged();
-                adapter.notifyItemRemoved(adapter.getItemCount());
+                // adapter.notifyItemRemoved(adapter.getItemCount());
+                adapter.notifyItemRemoved(adapter.removeItem(emptyItem));
                 refreshData();
             }
         });
         errorItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.removeItem(errorItem);
+                // adapter.removeItem(errorItem);
                 // adapter.notifyDataSetChanged();
-                adapter.notifyItemRemoved(adapter.getItemCount());
+                // adapter.notifyItemRemoved(adapter.getItemCount());
+                adapter.notifyItemRemoved(adapter.removeItem(errorItem));
                 refreshData();
             }
         });
@@ -71,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 footerItem.setState(FooterItem.LOADING);
                 // adapter.notifyDataSetChanged();
-                adapter.notifyItemChanged(adapter.getItemCount() - 1);
+                // adapter.notifyItemChanged(adapter.getItemCount() - 1);
+                adapter.notifyItemChanged(adapter.findPos(footerItem));
                 loading = true;
                 fetchData(true);
             }
@@ -183,11 +186,13 @@ public class MainActivity extends AppCompatActivity {
                         switch (view.getId()) {
                             case R.id.tv_like:
                                 imageItem.toggleLiked();
-                                adapter.notifyDataSetChanged();
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemChanged(adapter.findPos(imageItem));
                                 break;
                             case R.id.tv_hide:
-                                adapter.removeItem(item);
-                                adapter.notifyDataSetChanged();
+                                // adapter.removeItem(item);
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemRemoved(adapter.removeItem(item));
                                 break;
                             case R.id.tv_comment:
                                 CommonUtil.showToast(view.getContext(),
@@ -205,11 +210,13 @@ public class MainActivity extends AppCompatActivity {
                         switch (view.getId()) {
                             case R.id.tv_like:
                                 textItem.toggleLiked();
-                                adapter.notifyDataSetChanged();
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemChanged(adapter.findPos(textItem));
                                 break;
                             case R.id.tv_hide:
-                                adapter.removeItem(item);
-                                adapter.notifyDataSetChanged();
+                                // adapter.removeItem(item);
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemRemoved(adapter.removeItem(item));
                                 break;
                             case R.id.tv_comment:
                                 CommonUtil.showToast(view.getContext(),

@@ -43,6 +43,10 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Data
     // default items operation
     // you also can inherit MultiTypeAdapter to implement more methods to operate items
 
+    public int findPos(IItemType item) {
+        return items.indexOf(item);
+    }
+
     public void setItem(IItemType item) {
         clearItems();
         addItem(item);
@@ -69,8 +73,10 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Data
     // public void updateItem(item) {
     // }
 
-    public void removeItem(IItemType item) {
+    public int removeItem(IItemType item) {
+        int pos = findPos(item);
         items.remove(item);
+        return pos;
     }
 
     public void clearItems() {
