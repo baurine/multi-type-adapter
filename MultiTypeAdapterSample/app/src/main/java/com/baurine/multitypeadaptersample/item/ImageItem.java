@@ -20,7 +20,7 @@ public class ImageItem implements MultiTypeAdapter.IItemType {
     private final String url;
 
     public ImageItem() {
-        url = "https://unsplash.it/100/100?random&r=" + new Random().nextInt();
+        url = "https://unsplash.it/100/100?random&r=" + new Random().nextInt(40);
     }
 
     public String getUrl() {

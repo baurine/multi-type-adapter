@@ -13,11 +13,10 @@ import com.baurine.multitypeadaptersample.R;
 import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.databinding.ActivityMainBinding;
 import com.baurine.multitypeadaptersample.item.EmptyItem;
-import com.baurine.multitypeadaptersample.item.EndItem;
 import com.baurine.multitypeadaptersample.item.ErrorItem;
+import com.baurine.multitypeadaptersample.item.FooterItem;
 import com.baurine.multitypeadaptersample.item.HeaderItem;
 import com.baurine.multitypeadaptersample.item.ImageItem;
-import com.baurine.multitypeadaptersample.item.LoadingItem;
 import com.baurine.multitypeadaptersample.item.TextItem;
 
 import java.util.Random;
@@ -35,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private HeaderItem headerItem = new HeaderItem();
     private EmptyItem emptyItem = new EmptyItem();
     private ErrorItem errorItem = new ErrorItem();
-    private LoadingItem loadingItem = new LoadingItem();
-    private EndItem endItem = new EndItem();
+    private FooterItem footerItem = new FooterItem();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +46,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initItems() {
-        emptyItem.setBtnListener(new View.OnClickListener() {
+        emptyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 adapter.removeItem(emptyItem);
-                adapter.notifyDataSetChanged();
+                // adapter.notifyDataSetChanged();
+                adapter.notifyItemRemoved(adapter.getItemCount());
                 refreshData();
             }
         });
-        errorItem.setBtnListener(new View.OnClickListener() {
+        errorItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 adapter.removeItem(errorItem);
-                adapter.notifyDataSetChanged();
+                // adapter.notifyDataSetChanged();
+                adapter.notifyItemRemoved(adapter.getItemCount());
                 refreshData();
+            }
+        });
+        footerItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                footerItem.setState(FooterItem.LOADING);
+                // adapter.notifyDataSetChanged();
+                adapter.notifyItemChanged(adapter.getItemCount() - 1);
+                loading = true;
+                fetchData(true);
             }
         });
         adapter.addItem(headerItem);
@@ -95,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!refreshing) {
                             refreshing = true;
                             hasMoreData = true;
-                            // just keep headerItem
+                            // remove all other items, just keep headerItem
                             adapter.setItem(headerItem);
                             fetchData(false);
                         }
@@ -113,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // fetch data from server, for refreshing or load more
-    private void fetchData(final boolean fetchMore) {
+    private void fetchData(final boolean loadMore) {
         // mock network request
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -123,40 +133,43 @@ public class MainActivity extends AppCompatActivity {
                     binding.swipeRefreshLayout.setRefreshing(false);
                 }
 
-                if (fetchMore) {
+                if (loadMore) {
                     loading = false;
-                    adapter.removeItem(loadingItem);
-                    retrieveItems();
-                } else {
-                    int result = (new Random()).nextInt(100) % 5;
-                    // result = 0, empty result
-                    // result = 1, network error
-                    // result = 2, normal result
-                    if (result == 0) {
-                        adapter.addItem(emptyItem);
-                    } else if (result == 1) {
-                        adapter.addItem(errorItem);
-                    } else {
-                        retrieveItems();
-                    }
+                    adapter.removeItem(footerItem);
                 }
+                retrieveItems(loadMore);
                 adapter.notifyDataSetChanged();
             }
         }, 3000);
     }
 
-    public void retrieveItems() {
-        int resultCnt = adapter.getItemCount() > 20 ? 4 : PER_PAGE_COUNT;
+    public void retrieveItems(boolean loadMore) {
+        // result = 0, network error
+        // result = 1, empty or last page data
+        // result = 2 and other, normal result
+        int resultType = (new Random()).nextInt(100) % 4;
+        if (resultType == 0) {
+            adapter.addItem(loadMore ? footerItem.setState(FooterItem.ERROR) : errorItem);
+        } else if (resultType == 1) {
+            if (loadMore) {
+                hasMoreData = false;
 
-        for (int i = 0; i < resultCnt; i++) {
-            adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
-        }
-
-        if (resultCnt < PER_PAGE_COUNT) {
-            hasMoreData = false;
-            adapter.addItem(endItem);
+                for (int i = 0; i < PER_PAGE_COUNT / 2; i++) {
+                    adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
+                }
+                // here depends whether you want to display no more data state
+                // if you don't want to display this state when has no more data
+                // then just don't add it back
+                adapter.addItem(footerItem.setState(FooterItem.NO_MORE));
+            } else {
+                adapter.addItem(emptyItem);
+            }
         } else {
-            adapter.addItem(loadingItem);
+            for (int i = 0; i < PER_PAGE_COUNT; i++) {
+                adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
+            }
+            // pre-display loading state to improve user experience
+            adapter.addItem(footerItem.setState(FooterItem.LOADING));
         }
     }
 }

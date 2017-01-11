@@ -29,16 +29,15 @@ public class ErrorItem implements MultiTypeAdapter.IItemType {
 
     /////////////////////////////////////////////////
     // handle event
+    private View.OnClickListener onClickListener;
 
-    private View.OnClickListener btnListener;
-
-    public void setBtnListener(View.OnClickListener btnListener) {
-        this.btnListener = btnListener;
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
-    public void onBtnClick(View btn) {
-        if (btnListener != null) {
-            btnListener.onClick(btn);
+    public void onClick(View view) {
+        if (onClickListener != null) {
+            onClickListener.onClick(view);
         }
     }
 }

@@ -11,6 +11,10 @@ import com.baurine.multitypeadaptersample.BR;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by baurine on 1/10/17.
+ */
+
 public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.DataBoundViewHolder> {
 
     protected List<IItemType> items = new ArrayList<>();
