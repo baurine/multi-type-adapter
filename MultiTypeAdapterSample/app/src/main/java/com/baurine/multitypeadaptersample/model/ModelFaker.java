@@ -4,7 +4,7 @@ package com.baurine.multitypeadaptersample.model;
  * Created by baurine on 1/11/17.
  */
 
-public class Faker {
+public class ModelFaker {
     public static BaseModel fakeModel(int type) {
         if (type == 0) {
             return new ImageModel();
