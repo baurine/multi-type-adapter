@@ -14,10 +14,13 @@ import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.databinding.ActivityMainBinding;
 import com.baurine.multitypeadaptersample.item.EmptyItem;
 import com.baurine.multitypeadaptersample.item.ErrorItem;
+import com.baurine.multitypeadaptersample.item.FollowerItem;
 import com.baurine.multitypeadaptersample.item.FooterItem;
 import com.baurine.multitypeadaptersample.item.HeaderItem;
 import com.baurine.multitypeadaptersample.item.ImageItem;
 import com.baurine.multitypeadaptersample.item.TextItem;
+import com.baurine.multitypeadaptersample.model.ModelFaker;
+import com.baurine.multitypeadaptersample.util.CommonUtil;
 
 import java.util.Random;
 
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean refreshing = false;
     private boolean loading = false;
     private boolean hasMoreData = true;
-    private final int PER_PAGE_COUNT = 8;
+    private static final int PER_PAGE_COUNT = 8;
 
     private MultiTypeAdapter adapter = new MultiTypeAdapter();
     private HeaderItem headerItem = new HeaderItem();
@@ -49,18 +52,20 @@ public class MainActivity extends AppCompatActivity {
         emptyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.removeItem(emptyItem);
+                // adapter.removeItem(emptyItem);
                 // adapter.notifyDataSetChanged();
-                adapter.notifyItemRemoved(adapter.getItemCount());
+                // adapter.notifyItemRemoved(adapter.getItemCount());
+                adapter.notifyItemRemoved(adapter.removeItem(emptyItem));
                 refreshData();
             }
         });
         errorItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.removeItem(errorItem);
+                // adapter.removeItem(errorItem);
                 // adapter.notifyDataSetChanged();
-                adapter.notifyItemRemoved(adapter.getItemCount());
+                // adapter.notifyItemRemoved(adapter.getItemCount());
+                adapter.notifyItemRemoved(adapter.removeItem(errorItem));
                 refreshData();
             }
         });
@@ -69,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 footerItem.setState(FooterItem.LOADING);
                 // adapter.notifyDataSetChanged();
-                adapter.notifyItemChanged(adapter.getItemCount() - 1);
+                // adapter.notifyItemChanged(adapter.getItemCount() - 1);
+                adapter.notifyItemChanged(adapter.findPos(footerItem));
                 loading = true;
                 fetchData(true);
             }
@@ -89,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 if (hasMoreData &&
                         !loading &&
                         newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        adapter.getItemCount() > PER_PAGE_COUNT &&
+                        // here the threshold depends on your actual situation
+                        // adapter.getItemCount() > PER_PAGE_COUNT &&
+                        adapter.getItemCount() > 2 &&
                         llm.findLastVisibleItemPosition() >= adapter.getItemCount() - 1) {
                     loading = true;
                     fetchData(true);
@@ -140,23 +148,20 @@ public class MainActivity extends AppCompatActivity {
                 retrieveItems(loadMore);
                 adapter.notifyDataSetChanged();
             }
-        }, 3000);
+        }, 2000);
     }
 
-    public void retrieveItems(boolean loadMore) {
+    private void retrieveItems(boolean loadMore) {
         // result = 0, network error
         // result = 1, empty or last page data
         // result = 2 and other, normal result
-        int resultType = (new Random()).nextInt(100) % 4;
+        int resultType = (new Random()).nextInt(100) % 6;
         if (resultType == 0) {
             adapter.addItem(loadMore ? footerItem.setState(FooterItem.ERROR) : errorItem);
         } else if (resultType == 1) {
             if (loadMore) {
                 hasMoreData = false;
-
-                for (int i = 0; i < PER_PAGE_COUNT / 2; i++) {
-                    adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
-                }
+                addDataItems(PER_PAGE_COUNT / 2);
                 // here depends whether you want to display no more data state
                 // if you don't want to display this state when has no more data
                 // then just don't add it back
@@ -165,11 +170,74 @@ public class MainActivity extends AppCompatActivity {
                 adapter.addItem(emptyItem);
             }
         } else {
-            for (int i = 0; i < PER_PAGE_COUNT; i++) {
-                adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
-            }
+            addDataItems(PER_PAGE_COUNT);
             // pre-display loading state to improve user experience
             adapter.addItem(footerItem.setState(FooterItem.LOADING));
+        }
+    }
+
+    private void addDataItems(int count) {
+        for (int i = 0; i < count; i++) {
+            final MultiTypeAdapter.IItemType item = ModelFaker.fakeModel(i % 3).createItem();
+            if (item instanceof ImageItem) {
+                final ImageItem imageItem = (ImageItem) item;
+                imageItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.tv_like:
+                                imageItem.toggleLiked();
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemChanged(adapter.findPos(imageItem));
+                                break;
+                            case R.id.tv_hide:
+                                // adapter.removeItem(item);
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemRemoved(adapter.removeItem(item));
+                                break;
+                            case R.id.tv_comment:
+                                CommonUtil.showToast(view.getContext(),
+                                        "TODO: comment image, id: " +
+                                                String.valueOf(imageItem.getId()));
+                                break;
+                        }
+                    }
+                });
+            } else if (item instanceof TextItem) {
+                final TextItem textItem = (TextItem) item;
+                textItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.tv_like:
+                                textItem.toggleLiked();
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemChanged(adapter.findPos(textItem));
+                                break;
+                            case R.id.tv_hide:
+                                // adapter.removeItem(item);
+                                // adapter.notifyDataSetChanged();
+                                adapter.notifyItemRemoved(adapter.removeItem(item));
+                                break;
+                            case R.id.tv_comment:
+                                CommonUtil.showToast(view.getContext(),
+                                        "TODO: comment text, id: " +
+                                                String.valueOf(textItem.getId()));
+                                break;
+                        }
+                    }
+                });
+            } else if (item instanceof FollowerItem) {
+                final FollowerItem followerItem = (FollowerItem) item;
+                followerItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        followerItem.toggleFollowed();
+                        adapter.notifyItemChanged(adapter.findPos(followerItem));
+                    }
+                });
+            }
+            adapter.addItem(item);
         }
     }
 }

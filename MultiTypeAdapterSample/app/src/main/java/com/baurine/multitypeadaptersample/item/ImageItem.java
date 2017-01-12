@@ -1,15 +1,13 @@
 package com.baurine.multitypeadaptersample.item;
 
 import com.baurine.multitypeadaptersample.R;
-import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
-
-import java.util.Random;
+import com.baurine.multitypeadaptersample.model.ImageModel;
 
 /**
  * Created by baurine on 1/10/17.
  */
 
-public class ImageItem implements MultiTypeAdapter.IItemType {
+public class ImageItem extends BaseItem {
     @Override
     public int getType() {
         return R.layout.item_image;
@@ -17,13 +15,25 @@ public class ImageItem implements MultiTypeAdapter.IItemType {
 
     ///////////////////////////////////////
     // data model part
-    private final String url;
+    private ImageModel imageModel;
 
-    public ImageItem() {
-        url = "https://unsplash.it/100/100?random&r=" + new Random().nextInt(40);
+    public ImageItem(ImageModel imageModel) {
+        this.imageModel = imageModel;
     }
 
     public String getUrl() {
-        return url;
+        return imageModel.url;
+    }
+
+    public boolean isLiked() {
+        return imageModel.liked;
+    }
+
+    public int getId() {
+        return imageModel.id;
+    }
+
+    public void toggleLiked() {
+        imageModel.liked = !imageModel.liked;
     }
 }

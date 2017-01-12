@@ -11,17 +11,36 @@
 
     </data>
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:gravity="center">
+        app:cardCornerRadius="2dp">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:error="@{@drawable/ic_launcher}"
-            app:imageUrl="@{item.url}"
-            app:placeholder="@{@drawable/ic_launcher}"/>
-    </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:error="@{@drawable/ic_launcher}"
+                app:imageUrl="@{item.url}"
+                app:placeholder="@{@drawable/ic_launcher}"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#c0ffffff">
+
+                <include
+                    layout="@layout/include_actions"
+                    app:liked="@{item.liked}"
+                    app:onClickListener="@{item.onClickListener}"/>
+
+            </LinearLayout>
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
 </layout>
