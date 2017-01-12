@@ -13,17 +13,18 @@ public class FooterItem extends BaseItem {
     }
 
     ///////////////////////////////////////////////
+    public FooterItem setState(int state) {
+        this.state = state;
+        return this;
+    }
+
+    ///////////////////////////////////////////////
     // data part
     // FooterItem has 3 states: Loading, Error, NoMore
     public final static int LOADING = 0;
     public final static int ERROR = 1;
     public final static int NO_MORE = 2;
     private int state = LOADING;
-
-    public FooterItem setState(int state) {
-        this.state = state;
-        return this;
-    }
 
     public boolean isLoading() {
         return state == LOADING;
