@@ -13,14 +13,15 @@ public class EmptyItem extends BaseItem {
     }
 
     /////////////////////////////////////////////////
+    public EmptyItem() {
+        content = "Currently has no items, please refresh it later!";
+    }
+
+    /////////////////////////////////////////////////
     // data part
     private String content;
 
     public String getContent() {
         return content;
-    }
-
-    public EmptyItem() {
-        content = "Currently has no items, please refresh it later!";
     }
 }

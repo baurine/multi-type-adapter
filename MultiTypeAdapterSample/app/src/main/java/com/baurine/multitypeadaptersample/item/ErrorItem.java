@@ -13,14 +13,15 @@ public class ErrorItem extends BaseItem {
     }
 
     /////////////////////////////////////////////////
+    public ErrorItem() {
+        content = "Error happened! please try it later!";
+    }
+
+    /////////////////////////////////////////////////
     // data part
     private String content;
 
     public String getContent() {
         return content;
-    }
-
-    public ErrorItem() {
-        content = "Error happened! please try it later!";
     }
 }

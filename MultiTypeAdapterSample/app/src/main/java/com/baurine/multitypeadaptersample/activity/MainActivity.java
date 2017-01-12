@@ -14,13 +14,9 @@ import com.baurine.multitypeadaptersample.R;
 import com.baurine.multitypeadaptersample.databinding.ActivityMainBinding;
 import com.baurine.multitypeadaptersample.item.EmptyItem;
 import com.baurine.multitypeadaptersample.item.ErrorItem;
-import com.baurine.multitypeadaptersample.item.FollowerItem;
 import com.baurine.multitypeadaptersample.item.FooterItem;
 import com.baurine.multitypeadaptersample.item.HeaderItem;
-import com.baurine.multitypeadaptersample.item.ImageItem;
-import com.baurine.multitypeadaptersample.item.TextItem;
 import com.baurine.multitypeadaptersample.model.ModelFaker;
-import com.baurine.multitypeadaptersample.util.CommonUtil;
 
 import java.util.Random;
 
@@ -178,66 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDataItems(int count) {
         for (int i = 0; i < count; i++) {
-            final MultiTypeAdapter.IItemType item = ModelFaker.fakeModel(i % 3).createItem();
-            if (item instanceof ImageItem) {
-                final ImageItem imageItem = (ImageItem) item;
-                imageItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        switch (view.getId()) {
-                            case R.id.tv_like:
-                                imageItem.toggleLiked();
-                                // adapter.notifyDataSetChanged();
-                                adapter.notifyItemChanged(adapter.findPos(imageItem));
-                                break;
-                            case R.id.tv_hide:
-                                // adapter.removeItem(item);
-                                // adapter.notifyDataSetChanged();
-                                adapter.notifyItemRemoved(adapter.removeItem(item));
-                                break;
-                            case R.id.tv_comment:
-                                CommonUtil.showToast(view.getContext(),
-                                        "TODO: comment image, id: " +
-                                                String.valueOf(imageItem.getId()));
-                                break;
-                        }
-                    }
-                });
-            } else if (item instanceof TextItem) {
-                final TextItem textItem = (TextItem) item;
-                textItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        switch (view.getId()) {
-                            case R.id.tv_like:
-                                textItem.toggleLiked();
-                                // adapter.notifyDataSetChanged();
-                                adapter.notifyItemChanged(adapter.findPos(textItem));
-                                break;
-                            case R.id.tv_hide:
-                                // adapter.removeItem(item);
-                                // adapter.notifyDataSetChanged();
-                                adapter.notifyItemRemoved(adapter.removeItem(item));
-                                break;
-                            case R.id.tv_comment:
-                                CommonUtil.showToast(view.getContext(),
-                                        "TODO: comment text, id: " +
-                                                String.valueOf(textItem.getId()));
-                                break;
-                        }
-                    }
-                });
-            } else if (item instanceof FollowerItem) {
-                final FollowerItem followerItem = (FollowerItem) item;
-                followerItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        followerItem.toggleFollowed();
-                        adapter.notifyItemChanged(adapter.findPos(followerItem));
-                    }
-                });
-            }
-            adapter.addItem(item);
+            adapter.addItem(ModelFaker.fakeModel(i % 3).createItem(adapter));
         }
     }
 }

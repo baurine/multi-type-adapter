@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class FollowerModel extends BaseModel {
     @Override
-    public MultiTypeAdapter.IItemType createItem() {
-        return new FollowerItem(this);
+    public MultiTypeAdapter.IItemType createItem(MultiTypeAdapter adapter) {
+        return new FollowerItem(this, adapter);
     }
 
     ///////////////////////////////////////

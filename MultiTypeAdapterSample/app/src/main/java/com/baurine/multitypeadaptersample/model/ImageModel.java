@@ -11,8 +11,8 @@ import java.util.Random;
 
 public class ImageModel extends BaseModel {
     @Override
-    public MultiTypeAdapter.IItemType createItem() {
-        return new ImageItem(this);
+    public MultiTypeAdapter.IItemType createItem(MultiTypeAdapter adapter) {
+        return new ImageItem(this, adapter);
     }
 
     ////////////////////////////////////////
