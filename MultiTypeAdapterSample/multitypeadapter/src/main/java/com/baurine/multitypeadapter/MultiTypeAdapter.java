@@ -1,12 +1,10 @@
-package com.baurine.multitypeadaptersample.adapter;
+package com.baurine.multitypeadapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import com.baurine.multitypeadaptersample.BR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +87,7 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Data
         int getType();
 
         // if you want to the variable name in xml configurable, define following method
-        // int getVariableId();
+        int getVariableId();
     }
 
     ////////////////////////////////////////////////////////
@@ -108,16 +106,17 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Data
             this.binding = binding;
         }
 
-        void bindTo(Object obj) {
-            binding.setVariable(BR.item, obj);
-            binding.executePendingBindings();
-        }
-
-        // if you make the variable name in xml configurable, use following `bindTo()` method
-        // void bindTo(IItemType item) {
-        //     binding.setVariable(item.getVariableId(), item);
+        // this method doesn't work if this file is depended as a lib
+        // void bindTo(Object obj) {
+        //     binding.setVariable(BR.item, obj);
         //     binding.executePendingBindings();
         // }
+
+        // if you make the variable name in xml configurable, use following `bindTo()` method
+        void bindTo(IItemType item) {
+            binding.setVariable(item.getVariableId(), item);
+            binding.executePendingBindings();
+        }
     }
 
 }
