@@ -1,6 +1,6 @@
 package com.baurine.multitypeadaptersample.model;
 
-import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
+import com.baurine.multitypeadapter.MultiTypeAdapter;
 
 import java.util.Date;
 import java.util.Random;

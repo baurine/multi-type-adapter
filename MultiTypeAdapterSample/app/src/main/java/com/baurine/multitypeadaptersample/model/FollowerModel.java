@@ -1,7 +1,7 @@
 package com.baurine.multitypeadaptersample.model;
 
+import com.baurine.multitypeadapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.R;
-import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.item.FollowerItem;
 
 import java.util.Random;

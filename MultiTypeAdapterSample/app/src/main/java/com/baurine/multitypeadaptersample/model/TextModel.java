@@ -1,6 +1,6 @@
 package com.baurine.multitypeadaptersample.model;
 
-import com.baurine.multitypeadaptersample.adapter.MultiTypeAdapter;
+import com.baurine.multitypeadapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptersample.item.TextItem;
 
 import java.util.Random;
