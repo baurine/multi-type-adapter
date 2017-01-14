@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp">
+<layout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="item"
+            type="com.baurine.multitypeadaptertutorial.item.ImageItem"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ImageItem"/>
-</LinearLayout>
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:error="@{@drawable/ic_launcher}"
+            app:imageUrl="@{item.url}"
+            app:placeholder="@{@drawable/ic_launcher}"/>
+
+    </LinearLayout>
+</layout>

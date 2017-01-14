@@ -1,7 +1,7 @@
 package com.baurine.multitypeadaptertutorial.viewholder;
 
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
 
@@ -10,8 +10,11 @@ import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
  */
 
 public abstract class ItemViewHolder extends RecyclerView.ViewHolder {
-    public ItemViewHolder(View itemView) {
-        super(itemView);
+    protected final ViewDataBinding binding;
+
+    public ItemViewHolder(ViewDataBinding binding) {
+        super(binding.getRoot());
+        this.binding = binding;
     }
 
     public abstract void bindTo(MulitTypeAdapter.IItem item);

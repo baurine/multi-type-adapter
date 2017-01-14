@@ -1,8 +1,9 @@
 package com.baurine.multitypeadaptertutorial.viewholder;
 
-import android.view.View;
+import android.databinding.ViewDataBinding;
 
 import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
+import com.baurine.multitypeadaptertutorial.databinding.ItemImageBinding;
 import com.baurine.multitypeadaptertutorial.item.ImageItem;
 
 /**
@@ -10,12 +11,12 @@ import com.baurine.multitypeadaptertutorial.item.ImageItem;
  */
 
 public class ImageViewHolder extends ItemViewHolder {
-    public ImageViewHolder(View itemView) {
-        super(itemView);
+    public ImageViewHolder(ViewDataBinding binding) {
+        super(binding);
     }
 
     public void bindTo(MulitTypeAdapter.IItem item) {
         ImageItem imageItem = (ImageItem) item;
-        // then do something
+        ((ItemImageBinding) binding).setItem(imageItem);
     }
 }
