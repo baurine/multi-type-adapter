@@ -13,7 +13,7 @@ import java.util.List;
  * Created by baurine on 1/10/17.
  */
 
-public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.DataBoundViewHolder> {
+public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.ItemViewHolder> {
     public interface IItem {
         // should directly return layout
         int getType();
@@ -26,12 +26,12 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Data
 
     ////////////////////////////////////////////////////////
     @Override
-    public DataBoundViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return DataBoundViewHolder.create(parent, viewType);
+    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return ItemViewHolder.create(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(DataBoundViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.bindTo(items.get(position));
     }
 
@@ -93,17 +93,17 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Data
     }
 
     ////////////////////////////////////////////////////////
-    static class DataBoundViewHolder extends RecyclerView.ViewHolder {
-        private ViewDataBinding binding;
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final ViewDataBinding binding;
 
-        static DataBoundViewHolder create(ViewGroup parent, int viewType) {
+        static ItemViewHolder create(ViewGroup parent, int viewType) {
             ViewDataBinding binding =
                     DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                             viewType, parent, false);
-            return new DataBoundViewHolder(binding);
+            return new ItemViewHolder(binding);
         }
 
-        DataBoundViewHolder(ViewDataBinding binding) {
+        ItemViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
