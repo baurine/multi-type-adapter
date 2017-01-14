@@ -1,7 +1,7 @@
 package com.baurine.multitypeadaptertutorial.item;
 
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
+import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by baurine on 1/14/17.
  */
 
-public class TextItem implements MulitTypeAdapter.IItem {
+public class TextItem implements MultiTypeAdapter.IItem {
     @Override
     public int getType() {
         return R.layout.item_text;

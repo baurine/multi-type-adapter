@@ -1,7 +1,7 @@
 package com.baurine.multitypeadaptertutorial.item;
 
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
+import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 
 import java.util.Random;
 
@@ -9,7 +9,7 @@ import java.util.Random;
  * Created by baurine on 1/14/17.
  */
 
-public class ImageItem implements MulitTypeAdapter.IItem {
+public class ImageItem implements MultiTypeAdapter.IItem {
     @Override
     public int getType() {
         return R.layout.item_image;

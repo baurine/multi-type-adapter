@@ -1,18 +1,22 @@
 package com.baurine.multitypeadaptertutorial.adapter;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.baurine.multitypeadaptertutorial.viewholder.ItemViewHolder;
+import com.android.databinding.library.baseAdapters.BR;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by baurine on 1/14/17.
  */
 
-public class MulitTypeAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.ItemViewHolder> {
 
     public interface IItem {
         // should directly return layout
@@ -78,5 +82,26 @@ public class MulitTypeAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     public void clearItems() {
         items.clear();
+    }
+
+    ///////////////////////////////////////////////////
+
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final ViewDataBinding binding;
+
+        static ItemViewHolder create(ViewGroup parent, int viewType) {
+            ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                    viewType, parent, false);
+            return new ItemViewHolder(binding);
+        }
+
+        ItemViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        void bindTo(MultiTypeAdapter.IItem item) {
+            binding.setVariable(BR.item, item);
+        }
     }
 }
