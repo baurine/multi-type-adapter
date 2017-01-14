@@ -3,6 +3,9 @@ package com.baurine.multitypeadaptertutorial.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.baurine.multitypeadaptertutorial.viewholder.ItemViewHolder;
+import com.baurine.multitypeadaptertutorial.viewholder.ViewHolderFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ import java.util.List;
  * Created by baurine on 1/14/17.
  */
 
-public class MulitTypeAdapter extends RecyclerView.Adapter {
+public class MulitTypeAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     public interface IItem {
         // should directly return layout
@@ -22,13 +25,13 @@ public class MulitTypeAdapter extends RecyclerView.Adapter {
     ///////////////////////////////////////////////////////
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return ViewHolderFactory.create(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ItemViewHolder holder, int position) {
+        holder.bindTo(items.get(position));
     }
 
     @Override
