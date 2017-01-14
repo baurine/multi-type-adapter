@@ -1,7 +1,10 @@
 package com.baurine.multitypeadaptertutorial.viewholder;
 
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
@@ -12,6 +15,12 @@ import com.baurine.multitypeadaptertutorial.adapter.MulitTypeAdapter;
 
 public class ItemViewHolder extends RecyclerView.ViewHolder {
     private final ViewDataBinding binding;
+
+    public static ItemViewHolder create(ViewGroup parent, int viewType) {
+        ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                viewType, parent, false);
+        return new ItemViewHolder(binding);
+    }
 
     public ItemViewHolder(ViewDataBinding binding) {
         super(binding.getRoot());

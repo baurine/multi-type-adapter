@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.baurine.multitypeadaptertutorial.viewholder.ItemViewHolder;
-import com.baurine.multitypeadaptertutorial.viewholder.ViewHolderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class MulitTypeAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ViewHolderFactory.create(parent, viewType);
+        return ItemViewHolder.create(parent, viewType);
     }
 
     @Override
