@@ -11,7 +11,7 @@ import java.util.Random;
 
 public abstract class BaseModel {
 
-    public abstract MultiTypeAdapter.IItemType createItem(MultiTypeAdapter adapter);
+    public abstract MultiTypeAdapter.IItem createItem(MultiTypeAdapter adapter);
 
     /////////////////////////////////////////////////////////////////////
     public final int id;

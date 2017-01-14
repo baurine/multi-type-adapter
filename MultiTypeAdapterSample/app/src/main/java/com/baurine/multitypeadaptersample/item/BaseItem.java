@@ -9,7 +9,7 @@ import com.baurine.multitypeadaptersample.BR;
  * Created by baurine on 1/10/17.
  */
 
-public abstract class BaseItem implements MultiTypeAdapter.IItemType {
+public abstract class BaseItem implements MultiTypeAdapter.IItem {
     @Override
     public int getVariableId() {
         return BR.item;

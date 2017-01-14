@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class TextModel extends BaseModel {
     @Override
-    public MultiTypeAdapter.IItemType createItem(MultiTypeAdapter adapter) {
+    public MultiTypeAdapter.IItem createItem(MultiTypeAdapter adapter) {
         return new TextItem(this, adapter);
     }
 
