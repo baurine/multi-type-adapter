@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.baurine.multitypeadaptertutorial.R;
 import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
@@ -151,7 +152,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDataItems(int count) {
         for (int i = 0; i < count; i++) {
-            adapter.addItem(i % 2 == 0 ? new ImageItem() : new TextItem());
+            MultiTypeAdapter.IItem item = i % 2 == 0 ? new ImageItem() : new TextItem();
+            if (item instanceof ImageItem) {
+                final ImageItem imageItem = (ImageItem) item;
+                imageItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.tv_like:
+                                imageItem.toggleLiked();
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_hide:
+                                adapter.removeItem(imageItem);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_comment:
+                                // TODO: jump to another activity
+                                break;
+                        }
+                    }
+                });
+                adapter.addItem(imageItem);
+            } else {
+                final TextItem textItem = (TextItem) item;
+                textItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.tv_like:
+                                textItem.toggleLiked();
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_hide:
+                                adapter.removeItem(textItem);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            case R.id.tv_comment:
+                                // TODO: jump to another activity
+                                break;
+                        }
+                    }
+                });
+                adapter.addItem(textItem);
+            }
         }
     }
 }
