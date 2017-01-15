@@ -2,13 +2,12 @@ package com.baurine.multitypeadaptertutorial.item;
 
 
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 
 /**
  * Created by baurine on 1/10/17.
  */
 
-public class FooterItem implements MultiTypeAdapter.IItem {
+public class FooterItem extends BaseItem {
     @Override
     public int getType() {
         return R.layout.item_footer;

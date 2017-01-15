@@ -52,6 +52,7 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/x_btn_bg"
+                android:onClick="@{item.onClickListener::onClick}"
                 android:text="Retry"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"/>

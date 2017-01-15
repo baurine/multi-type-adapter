@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.baurine.multitypeadaptertutorial.R;
 import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
@@ -77,6 +78,31 @@ public class MainActivity extends AppCompatActivity {
         emptyItem = new EmptyItem();
         errorItem = new ErrorItem();
         footerItem = new FooterItem();
+
+        emptyItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.notifyItemRemoved(adapter.removeItem(emptyItem));
+                refreshData();
+            }
+        });
+        errorItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.notifyItemRemoved(adapter.removeItem(errorItem));
+                refreshData();
+            }
+        });
+        footerItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                footerItem.setState(FooterItem.LOADING);
+                adapter.notifyItemChanged(adapter.findPos(footerItem));
+                loading = true;
+                fetchData(true);
+            }
+        });
+
         adapter.addItem(headerItem);
         adapter.addItem(emptyItem);
     }

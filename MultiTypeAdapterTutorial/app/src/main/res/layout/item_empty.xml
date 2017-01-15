@@ -29,6 +29,7 @@
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/x_btn_bg"
+            android:onClick="@{item.onClickListener::onClick}"
             android:text="Refresh"
             android:textAllCaps="false"
             android:textColor="#ffffff"/>

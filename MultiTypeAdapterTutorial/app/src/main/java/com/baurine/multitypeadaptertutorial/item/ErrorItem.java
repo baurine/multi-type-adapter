@@ -2,13 +2,12 @@ package com.baurine.multitypeadaptertutorial.item;
 
 
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 
 /**
  * Created by baurine on 1/10/17.
  */
 
-public class ErrorItem implements MultiTypeAdapter.IItem {
+public class ErrorItem extends BaseItem {
     @Override
     public int getType() {
         return R.layout.item_error;

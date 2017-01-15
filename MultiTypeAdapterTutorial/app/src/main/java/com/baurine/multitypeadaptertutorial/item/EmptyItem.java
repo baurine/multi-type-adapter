@@ -1,13 +1,12 @@
 package com.baurine.multitypeadaptertutorial.item;
 
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 
 /**
  * Created by baurine on 1/10/17.
  */
 
-public class EmptyItem implements MultiTypeAdapter.IItem {
+public class EmptyItem extends BaseItem {
     @Override
     public int getType() {
         return R.layout.item_empty;
