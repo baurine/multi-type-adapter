@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="liked"
+            type="Boolean"/>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="@{liked ? `取消赞` : `点赞`}"
+            android:textColor="@{liked ? @android:color/holo_red_light : @android:color/darker_gray}"/>
+
+        <TextView
+            android:id="@+id/tv_hide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="隐藏"/>
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="评论"/>
+
+    </LinearLayout>
+</layout>

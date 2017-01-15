@@ -13,7 +13,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
@@ -22,6 +23,11 @@
             app:error="@{@drawable/ic_launcher}"
             app:imageUrl="@{item.url}"
             app:placeholder="@{@drawable/ic_launcher}"/>
+
+        <include
+            layout="@layout/include_actions"
+            app:liked="@{item.liked}"
+            app:onClickListener="@{item.onClickListener}"/>
 
     </LinearLayout>
 </layout>
