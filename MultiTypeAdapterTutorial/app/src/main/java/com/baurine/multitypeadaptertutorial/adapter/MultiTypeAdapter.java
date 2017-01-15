@@ -102,6 +102,7 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
 
         void bindTo(MultiTypeAdapter.IItem item) {
             binding.setVariable(BR.item, item);
+            binding.executePendingBindings();
         }
     }
 }
