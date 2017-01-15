@@ -31,11 +31,10 @@ public class ImageItem extends BaseItem {
                 switch (view.getId()) {
                     case R.id.tv_like:
                         toggleLiked();
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemChanged(adapter.findPos(ImageItem.this));
                         break;
                     case R.id.tv_hide:
-                        adapter.removeItem(ImageItem.this);
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemRemoved(adapter.removeItem(ImageItem.this));
                         break;
                     case R.id.tv_comment:
                         // TODO: jump to another activity

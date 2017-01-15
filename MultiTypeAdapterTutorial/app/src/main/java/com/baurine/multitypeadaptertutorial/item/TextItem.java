@@ -32,11 +32,10 @@ public class TextItem extends BaseItem {
                 switch (view.getId()) {
                     case R.id.tv_like:
                         toggleLiked();
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemChanged(adapter.findPos(TextItem.this));
                         break;
                     case R.id.tv_hide:
-                        adapter.removeItem(TextItem.this);
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemRemoved(adapter.removeItem(TextItem.this));
                         break;
                     case R.id.tv_comment:
                         // TODO: jump to another activity

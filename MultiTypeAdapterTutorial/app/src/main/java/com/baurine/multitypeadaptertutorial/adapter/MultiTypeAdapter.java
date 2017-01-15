@@ -54,6 +54,10 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
         return items;
     }
 
+    public int findPos(IItem item) {
+        return items.indexOf(item);
+    }
+
     public void setItem(IItem item) {
         clearItems();
         addItem(item);
@@ -76,8 +80,10 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
         this.items.addAll(items);
     }
 
-    public void removeItem(IItem item) {
+    public int removeItem(IItem item) {
+        int pos = findPos(item);
         items.remove(item);
+        return pos;
     }
 
     public void clearItems() {
