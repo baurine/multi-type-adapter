@@ -31,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private ErrorItem errorItem;
     private FooterItem footerItem;
 
-    private static final int PER_PAGE_COUNT = 8;
     private boolean refreshing = false;
+    private boolean loading = false;
+    private boolean hasMoreData = true;
+    private static final int PER_PAGE_COUNT = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +81,25 @@ public class MainActivity extends AppCompatActivity {
         adapter.addItem(emptyItem);
     }
 
-    private void loadMoreData() {
-        // TODO
-    }
-
     private void refreshData() {
         if (!refreshing) {
             refreshing = true;
+            hasMoreData = true;
             swipeRefreshLayout.setRefreshing(true);
             // remove all other items, just keep headerItem
             adapter.setItem(headerItem);
             fetchData(false);
+        }
+    }
+
+    private void loadMoreData() {
+        if (hasMoreData &&
+                !loading &&
+                // here the threshold depends on your actual situation
+                // adapter.getItemCount() > PER_PAGE_COUNT
+                adapter.getItemCount() > 2) {
+            loading = true;
+            fetchData(true);
         }
     }
 
@@ -104,7 +114,10 @@ public class MainActivity extends AppCompatActivity {
                     refreshing = false;
                     swipeRefreshLayout.setRefreshing(false);
                 }
-
+                if (loadMore) {
+                    loading = false;
+                    adapter.removeItem(footerItem);
+                }
                 retrieveItems(loadMore);
                 adapter.notifyDataSetChanged();
             }
@@ -117,9 +130,18 @@ public class MainActivity extends AppCompatActivity {
         // result = 2 and other, normal result
         int resultType = (new Random()).nextInt(100) % 4;
         if (resultType == 0) {
-            adapter.addItem(errorItem);
+            adapter.addItem(loadMore ? footerItem.setState(FooterItem.ERROR) : errorItem);
         } else if (resultType == 1) {
-            adapter.addItem(emptyItem);
+            if (loadMore) {
+                hasMoreData = false;
+                addDataItems(PER_PAGE_COUNT / 2);
+                // here depends whether you want to display no more data state
+                // if you don't want to display this state when has no more data
+                // then just don't add it back
+                adapter.addItem(footerItem.setState(FooterItem.NO_MORE));
+            } else {
+                adapter.addItem(emptyItem);
+            }
         } else {
             addDataItems(PER_PAGE_COUNT);
             // pre-display loading state to improve user experience
