@@ -10,12 +10,21 @@ import android.support.v7.widget.RecyclerView;
 import com.baurine.multitypeadaptertutorial.R;
 import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptertutorial.databinding.ActivityMainBinding;
+import com.baurine.multitypeadaptertutorial.item.EmptyItem;
+import com.baurine.multitypeadaptertutorial.item.ErrorItem;
+import com.baurine.multitypeadaptertutorial.item.FooterItem;
+import com.baurine.multitypeadaptertutorial.item.HeaderItem;
 
 public class MainActivity extends AppCompatActivity {
 
     private MultiTypeAdapter adapter = new MultiTypeAdapter();
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
+
+    private HeaderItem headerItem;
+    private EmptyItem emptyItem;
+    private ErrorItem errorItem;
+    private FooterItem footerItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = binding.swipeRefreshLayout;
         recyclerView = binding.recyclerView;
         initViews();
+        initItems();
     }
 
     private void initViews() {
@@ -50,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initItems() {
+        headerItem = new HeaderItem();
+        emptyItem = new EmptyItem();
+        errorItem = new ErrorItem();
+        footerItem = new FooterItem();
+        adapter.addItem(headerItem);
+        adapter.addItem(emptyItem);
     }
 
     private void loadMore() {
