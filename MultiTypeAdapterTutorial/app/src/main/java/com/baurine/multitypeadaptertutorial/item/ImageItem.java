@@ -4,8 +4,7 @@ import android.view.View;
 
 import com.baurine.multitypeadaptertutorial.R;
 import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
-
-import java.util.Random;
+import com.baurine.multitypeadaptertutorial.model.ImageModel;
 
 /**
  * Created by baurine on 1/14/17.
@@ -18,12 +17,10 @@ public class ImageItem extends BaseItem {
     }
 
     ////////////////////////////////////////////////
-    public final String url;
-    private boolean liked;
+    private final ImageModel imageModel;
 
-    public ImageItem(final MultiTypeAdapter adapter) {
-        url = "https://unsplash.it/200/200?random&" + new Random().nextInt(40);
-        liked = new Random().nextBoolean();
+    public ImageItem(final MultiTypeAdapter adapter, ImageModel imageModel) {
+        this.imageModel = imageModel;
 
         setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,11 +41,15 @@ public class ImageItem extends BaseItem {
         });
     }
 
-    public boolean isLiked() {
-        return liked;
+    public String getUrl() {
+        return imageModel.url;
     }
 
-    public void toggleLiked() {
-        liked = !liked;
+    public boolean isLiked() {
+        return imageModel.liked;
+    }
+
+    private void toggleLiked() {
+        imageModel.liked = !imageModel.liked;
     }
 }

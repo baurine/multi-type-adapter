@@ -4,9 +4,7 @@ import android.view.View;
 
 import com.baurine.multitypeadaptertutorial.R;
 import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
-
-import java.util.Date;
-import java.util.Random;
+import com.baurine.multitypeadaptertutorial.model.TextModel;
 
 /**
  * Created by baurine on 1/14/17.
@@ -19,12 +17,10 @@ public class TextItem extends BaseItem {
     }
 
     ///////////////////////////////////////////
-    public final String content;
-    private boolean liked;
+    private final TextModel textModel;
 
-    public TextItem(final MultiTypeAdapter adapter) {
-        content = new Date().toString();
-        liked = new Random().nextBoolean();
+    public TextItem(final MultiTypeAdapter adapter, TextModel textModel) {
+        this.textModel = textModel;
 
         setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,11 +41,15 @@ public class TextItem extends BaseItem {
         });
     }
 
-    public boolean isLiked() {
-        return liked;
+    public String getContent() {
+        return textModel.content;
     }
 
-    public void toggleLiked() {
-        liked = !liked;
+    public boolean isLiked() {
+        return textModel.liked;
+    }
+
+    private void toggleLiked() {
+        textModel.liked = !textModel.liked;
     }
 }
