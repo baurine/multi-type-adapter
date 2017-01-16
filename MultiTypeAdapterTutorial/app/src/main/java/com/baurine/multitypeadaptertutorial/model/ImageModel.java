@@ -1,5 +1,9 @@
 package com.baurine.multitypeadaptertutorial.model;
 
+import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
+import com.baurine.multitypeadaptertutorial.item.BaseItem;
+import com.baurine.multitypeadaptertutorial.item.ImageItem;
+
 import java.util.Random;
 
 /**
@@ -7,6 +11,12 @@ import java.util.Random;
  */
 
 public class ImageModel extends BaseModel {
+    @Override
+    public BaseItem createItem(MultiTypeAdapter adapter) {
+        return new ImageItem(adapter, this);
+    }
+
+    ////////////////////////////////////////////////////
     public String url;
     public boolean liked;
 

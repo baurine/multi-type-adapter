@@ -1,5 +1,9 @@
 package com.baurine.multitypeadaptertutorial.model;
 
+import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
+import com.baurine.multitypeadaptertutorial.item.BaseItem;
+import com.baurine.multitypeadaptertutorial.item.TextItem;
+
 import java.util.Date;
 import java.util.Random;
 
@@ -8,6 +12,12 @@ import java.util.Random;
  */
 
 public class TextModel extends BaseModel {
+    @Override
+    public BaseItem createItem(MultiTypeAdapter adapter) {
+        return new TextItem(adapter, this);
+    }
+
+    ////////////////////////////////////////////////////
     public String content;
     public boolean liked;
 

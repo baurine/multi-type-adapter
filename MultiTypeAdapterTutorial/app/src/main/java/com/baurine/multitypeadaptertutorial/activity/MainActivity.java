@@ -16,12 +16,7 @@ import com.baurine.multitypeadaptertutorial.item.EmptyItem;
 import com.baurine.multitypeadaptertutorial.item.ErrorItem;
 import com.baurine.multitypeadaptertutorial.item.FooterItem;
 import com.baurine.multitypeadaptertutorial.item.HeaderItem;
-import com.baurine.multitypeadaptertutorial.item.ImageItem;
-import com.baurine.multitypeadaptertutorial.item.TextItem;
-import com.baurine.multitypeadaptertutorial.model.BaseModel;
-import com.baurine.multitypeadaptertutorial.model.ImageModel;
 import com.baurine.multitypeadaptertutorial.model.ModelFaker;
-import com.baurine.multitypeadaptertutorial.model.TextModel;
 
 import java.util.Random;
 
@@ -181,12 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDataItems(int count) {
         for (int i = 0; i < count; i++) {
-            BaseModel baseModel = ModelFaker.fake();
-            if (baseModel instanceof ImageModel) {
-                adapter.addItem(new ImageItem(adapter, (ImageModel) baseModel));
-            } else {
-                adapter.addItem(new TextItem(adapter, (TextModel) baseModel));
-            }
+            adapter.addItem(ModelFaker.fake().createItem(adapter));
         }
     }
 }

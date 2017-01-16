@@ -1,5 +1,8 @@
 package com.baurine.multitypeadaptertutorial.model;
 
+import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
+import com.baurine.multitypeadaptertutorial.item.BaseItem;
+
 import java.util.Date;
 import java.util.Random;
 
@@ -8,7 +11,11 @@ import java.util.Random;
  */
 
 public class BaseModel {
+    public BaseItem createItem(MultiTypeAdapter adapter) {
+        return null;
+    }
 
+    ////////////////////////////////////////////////////////
     public int id;
     public Date createdAt;
     public Date updatedAt;
