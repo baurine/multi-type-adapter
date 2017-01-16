@@ -1,6 +1,6 @@
 package com.baurine.multitypeadaptertutorial.model;
 
-import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
+import com.baurine.multitypeadapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptertutorial.item.BaseItem;
 import com.baurine.multitypeadaptertutorial.item.TextItem;
 

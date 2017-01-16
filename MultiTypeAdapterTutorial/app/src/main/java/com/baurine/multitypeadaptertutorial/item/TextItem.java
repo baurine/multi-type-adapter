@@ -2,8 +2,8 @@ package com.baurine.multitypeadaptertutorial.item;
 
 import android.view.View;
 
+import com.baurine.multitypeadapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptertutorial.model.TextModel;
 
 /**

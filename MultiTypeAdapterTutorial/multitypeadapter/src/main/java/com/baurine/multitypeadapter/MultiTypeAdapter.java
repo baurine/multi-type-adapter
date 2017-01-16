@@ -1,12 +1,10 @@
-package com.baurine.multitypeadaptertutorial.adapter;
+package com.baurine.multitypeadapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import com.android.databinding.library.baseAdapters.BR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +19,9 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
     public interface IItem {
         // should directly return layout
         int getType();
+
+        // make variable id in xml configurable
+        int getVariableId();
     }
 
     private List<IItem> items = new ArrayList<>();
@@ -107,7 +108,7 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
         }
 
         void bindTo(MultiTypeAdapter.IItem item) {
-            binding.setVariable(BR.item, item);
+            binding.setVariable(item.getVariableId(), item);
             binding.executePendingBindings();
         }
     }

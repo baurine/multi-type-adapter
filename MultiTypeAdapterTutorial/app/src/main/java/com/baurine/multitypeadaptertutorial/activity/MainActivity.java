@@ -9,8 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.baurine.multitypeadapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptertutorial.R;
-import com.baurine.multitypeadaptertutorial.adapter.MultiTypeAdapter;
 import com.baurine.multitypeadaptertutorial.databinding.ActivityMainBinding;
 import com.baurine.multitypeadaptertutorial.item.EmptyItem;
 import com.baurine.multitypeadaptertutorial.item.ErrorItem;
