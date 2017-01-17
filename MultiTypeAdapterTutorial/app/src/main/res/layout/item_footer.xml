@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="item"
+            type="com.baurine.multitypeadaptertutorial.item.FooterItem"/>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <!-- LOADING state-->
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:visibility="@{item.loading ? View.VISIBLE : View.GONE}"/>
+
+        <!-- NO_MORE state -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="~~~~~~ No more data! ~~~~~~"
+            android:visibility="@{item.noMore ? View.VISIBLE : View.GONE}"/>
+
+        <!-- ERROR state -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="@{item.error ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Some error happened! please retry later!"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/x_btn_bg"
+                android:onClick="@{item.onClickListener::onClick}"
+                android:text="Retry"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>
