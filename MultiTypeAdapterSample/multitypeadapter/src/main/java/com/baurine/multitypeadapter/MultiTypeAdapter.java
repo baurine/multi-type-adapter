@@ -120,5 +120,4 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
             binding.executePendingBindings();
         }
     }
-
 }

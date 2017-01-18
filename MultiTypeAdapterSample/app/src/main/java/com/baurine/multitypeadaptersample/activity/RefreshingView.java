@@ -5,8 +5,6 @@ package com.baurine.multitypeadaptersample.activity;
  */
 
 // it should move to `iview` folder
-public interface MainView {
-    void showRefreshing();
-
-    void hideRefreshing();
+public interface RefreshingView {
+    void setRefreshing(boolean refreshing);
 }

@@ -11,7 +11,7 @@ import com.baurine.multitypeadaptersample.R;
 import com.baurine.multitypeadaptersample.databinding.ActivityMainBinding;
 import com.baurine.multitypeadaptersample.presenter.MainPresenter;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements RefreshingView {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         llm.findLastVisibleItemPosition() >= mainPresenter.getAdapter().getItemCount() - 1) {
-                    mainPresenter.loadMore();
+                    mainPresenter.loadMoreData();
                 }
             }
         });
@@ -53,12 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void showRefreshing() {
-        swipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void hideRefreshing() {
-        swipeRefreshLayout.setRefreshing(false);
+    public void setRefreshing(boolean refreshing) {
+        swipeRefreshLayout.setRefreshing(refreshing);
     }
 }
