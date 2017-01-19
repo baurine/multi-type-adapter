@@ -69,8 +69,6 @@ public class MainPresenter {
             refreshing = true;
             refreshingView.setRefreshing(true);
             footerItem.setState(FooterItem.LOADING);
-            // remove all other items, just keep headerItem
-            adapter.setItem(headerItem);
             fetchData(false);
         }
     }
@@ -96,14 +94,14 @@ public class MainPresenter {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (refreshing) {
-                    refreshing = false;
-                    refreshingView.setRefreshing(false);
-                }
-
                 if (loadMore) {
                     loading = false;
                     adapter.removeItem(footerItem);
+                } else {
+                    refreshing = false;
+                    refreshingView.setRefreshing(false);
+                    // remove all other items, just keep headerItem
+                    adapter.setItem(headerItem);
                 }
                 retrieveItems(loadMore);
                 adapter.notifyDataSetChanged();
@@ -125,7 +123,8 @@ public class MainPresenter {
             addDataItems(PER_PAGE_COUNT / 2);
             // here depends whether you want to display no more data state
             // if you don't want to display this state when has no more data
-            // then just don't add it back
+            // then just don't add it back,
+            // but still need set no more state for footerItem
             adapter.addItem(footerItem.setState(FooterItem.NO_MORE));
         } else {
             addDataItems(PER_PAGE_COUNT);

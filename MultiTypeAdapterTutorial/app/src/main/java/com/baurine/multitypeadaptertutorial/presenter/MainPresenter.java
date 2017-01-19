@@ -75,8 +75,6 @@ public class MainPresenter {
             refreshing = true;
             refreshingView.setRefreshing(true);
             footerItem.setState(FooterItem.LOADING);
-            // remove all other items, just keep headerItem
-            adapter.setItem(headerItem);
             fetchData(false);
         }
     }
@@ -102,13 +100,14 @@ public class MainPresenter {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (refreshing) {
-                    refreshing = false;
-                    refreshingView.setRefreshing(false);
-                }
                 if (loadMore) {
                     loading = false;
                     adapter.removeItem(footerItem);
+                } else {
+                    refreshing = false;
+                    refreshingView.setRefreshing(false);
+                    // remove all other items, just keep headerItem
+                    adapter.setItem(headerItem);
                 }
                 retrieveItems(loadMore);
                 adapter.notifyDataSetChanged();

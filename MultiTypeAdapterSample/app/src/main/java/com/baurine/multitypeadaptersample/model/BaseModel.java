@@ -9,9 +9,11 @@ import java.util.Random;
  * Created by baurine on 1/11/17.
  */
 
-public abstract class BaseModel {
+public class BaseModel {
 
-    public abstract MultiTypeAdapter.IItem createItem(MultiTypeAdapter adapter);
+    public MultiTypeAdapter.IItem createItem(MultiTypeAdapter adapter) {
+        return null;
+    }
 
     /////////////////////////////////////////////////////////////////////
     public final int id;
