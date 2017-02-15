@@ -8,7 +8,7 @@ import com.baurine.multitypeadaptersample.R;
 
 public class ErrorItem extends BaseItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_error;
     }
 

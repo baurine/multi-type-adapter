@@ -12,7 +12,7 @@ import com.baurine.multitypeadaptersample.model.FollowerModel;
 
 public class FollowerItem extends BaseItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_follower;
     }
 

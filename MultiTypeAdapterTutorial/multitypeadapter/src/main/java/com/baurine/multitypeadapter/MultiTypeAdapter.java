@@ -17,10 +17,10 @@ import java.util.List;
 public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.ItemViewHolder> {
 
     public interface IItem {
-        // should directly return layout
-        int getType();
+        // get the xml layout this type item used in
+        int getLayout();
 
-        // make variable id in xml configurable
+        // get the variable name in the xml
         int getVariableId();
     }
 
@@ -45,7 +45,7 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
 
     @Override
     public int getItemViewType(int position) {
-        return items.get(position).getType();
+        return items.get(position).getLayout();
     }
 
     ///////////////////////////////////////////////////////

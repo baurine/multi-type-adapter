@@ -14,7 +14,7 @@ import com.baurine.multitypeadaptersample.util.DateFormatUtil;
 
 public class TextItem extends BaseItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_text;
     }
 

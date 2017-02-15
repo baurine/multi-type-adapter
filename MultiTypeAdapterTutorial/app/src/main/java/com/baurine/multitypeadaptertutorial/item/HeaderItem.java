@@ -8,7 +8,7 @@ import com.baurine.multitypeadaptertutorial.R;
 
 public class HeaderItem extends BaseItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_header;
     }
 }

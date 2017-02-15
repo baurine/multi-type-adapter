@@ -12,7 +12,7 @@ import com.baurine.multitypeadaptertutorial.model.ImageModel;
 
 public class ImageItem extends BaseItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_image;
     }
 

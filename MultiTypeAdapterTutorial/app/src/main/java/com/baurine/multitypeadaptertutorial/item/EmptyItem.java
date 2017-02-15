@@ -8,7 +8,7 @@ import com.baurine.multitypeadaptertutorial.R;
 
 public class EmptyItem extends BaseItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_empty;
     }
 

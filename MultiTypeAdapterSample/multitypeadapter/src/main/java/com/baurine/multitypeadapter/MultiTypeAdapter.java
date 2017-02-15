@@ -15,10 +15,10 @@ import java.util.List;
 
 public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.ItemViewHolder> {
     public interface IItem {
-        // should directly return layout
-        int getType();
+        // get the xml layout this type item used in
+        int getLayout();
 
-        // if you want to the variable name in xml configurable, define following method
+        // get the variable name in the xml
         int getVariableId();
     }
 
@@ -37,7 +37,7 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
 
     @Override
     public int getItemViewType(int position) {
-        return items.get(position).getType();
+        return items.get(position).getLayout();
     }
 
     @Override
@@ -78,10 +78,6 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
         this.items.addAll(items);
     }
 
-    // we don't need updateItem() method
-    // public void updateItem(item) {
-    // }
-
     public int removeItem(IItem item) {
         int pos = findPos(item);
         items.remove(item);
@@ -108,13 +104,6 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<MultiTypeAdapter.Item
             this.binding = binding;
         }
 
-        // this method doesn't work if this file is depended as a lib
-        // void bindTo(Object obj) {
-        //     binding.setVariable(BR.item, obj);
-        //     binding.executePendingBindings();
-        // }
-
-        // if you make the variable name in xml configurable, use following `bindTo()` method
         void bindTo(IItem item) {
             binding.setVariable(item.getVariableId(), item);
             binding.executePendingBindings();
