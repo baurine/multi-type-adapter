@@ -8,22 +8,22 @@ I write a very detail tutorial to explain how to implement this MultiTypeAdapter
 
 ## Tutorial
 
-1. [Escape the nightmare of adapter and viewholder by android databinding (1)](./multi-type-adapter-tutorial-1.md)
-1. [Escape the nightmare of adapter and viewholder by android databinding (2)](./multi-type-adapter-tutorial-2.md)
+1. [Escape the nightmare of adapter and viewholder by android databinding (1)](./note/multi-type-adapter-tutorial-1.md)
+1. [Escape the nightmare of adapter and viewholder by android databinding (2)](./note/multi-type-adapter-tutorial-2.md)
 
 ## Sample
 
 1. Demo HeaderItem, EmptyItem, ErrorItem, refresh, load more, load error and retry:
 
-   ![](./sample_art/multi_type_adapter_1.gif)
+   ![](./note/sample_art/multi_type_adapter_1.gif)
 
 1. Demo load more but has no more data:
 
-   ![](./sample_art/multi_type_adapter_2.gif)
+   ![](./note/sample_art/multi_type_adapter_2.gif)
 
 1. Polish the UI, add event handler for item:
 
-   ![](./sample_art/multi_type_adapter_3.gif)
+   ![](./note/sample_art/multi_type_adapter_3.gif)
 
 The sample includes following features, I think it should fullfill 90% needs:
 
@@ -35,9 +35,8 @@ The sample includes following features, I think it should fullfill 90% needs:
 1. Support footer item, includes 3 states: loading, load error and enable retry, no more data
 1. Support any kind of data item, here just demo ImageItem and TextItem
 
-[Download APK](https://github.com/baurine/multi-type-adapter/releases/tag/v1.0.5_release)  
+[Download APK](https://github.com/baurine/multi-type-adapter/releases/tag/v1.0.5_release) | [GitHub](https://github.com/baurine/multi-type-adapter)
 
-[GitHub](https://github.com/baurine/multi-type-adapter)  
 There are two folders in this project, MultiTypeAdapterSample and MultiTypeAdapterTutorial, their codes are nearly same, the latter is created for the above tutorial articles, I tag the every key step so you can easily compare the code with article.
 
 ## Getting Started
@@ -54,14 +53,10 @@ Add JitPack as library source in your project `build.gradle`:
 Then, add dependency in your app module `build.gradle`:
 
     dependencies {
-        compile 'com.github.baurine:multi-type-adapter:1.0.6'
+        compile 'com.github.baurine:multi-type-adapter:${latest-version}'
     }
 
-The `multi-type-adapter` internal depend `recyclerview-v7:25.1.0`, if you want to use another recyclerview version, exclude it and depend the recyclerview you choose:
-
-    compile ('com.github.baurine:multi-type-adapter:1.0.6')
-            { exclude group: 'com.android.support' }
-    compile 'com.android.support:recyclerview-v7:{you_choosen_version}'
+`latest-version`: see top jitpack badge.
 
 And enable databinding in your app module `build.gradle`:
 
@@ -76,15 +71,17 @@ And enable databinding in your app module `build.gradle`:
 
 Please read the above super detail tutorial to learn how exactly to use it. Following are some simple instruction extract from tutorial.
 
-After you use this MultiTypeAdapter, you just need to implement kinds of items, and add to or remove from adapter at the right time. The item represents a whole body that display in recyclerview, includes layout, data and event, so it is a wrapper, wrap the layout, data model and event handler together, but the data model and event handler are not necessary, just layout is must needed, it depends on what's the kind of item. All items must inherit from `IItem` interface:
+After you use this MultiTypeAdapter, you just need to implement kinds of items, and add to or remove from adapter at the right time. The item represents a whole body that display in recyclerview, includes layout, data and event, so it is a wrapper, wrap the layout, data model and event handler together, but the data model and event handler are not necessary, just layout is required, it depends on what's the kind of item. All items must inherit from `IItem` interface:
 
     public interface IItem {
-        int getType();
+        // get the xml layout this type item used in
+        int getLayout();
 
+        // get the variable name in the xml
         int getVariableId();
     }
 
-`getType()` method should return the xml layout, likes `R.layout.item_header`, and `getVariableId()` return the variable name this item used in xml, likes `BR.item`. Becasuse we usually use a same variable name in all items, and the event handler, usually it can be a `View.OnClickListener`, so we define a `BaseItem`:
+`getLayout()` method should return the xml layout, likes `R.layout.item_header`, and `getVariableId()` return the variable name this item used in xml, likes `BR.item`. Becasuse we usually use a same variable name in all items, and the event handler, usually it can be a `View.OnClickListener`, so we define a `BaseItem`:
 
     public abstract class BaseItem implements MultiTypeAdapter.IItem {
         @Override
@@ -109,7 +106,7 @@ Here is an example, a most simple item - HeaderItem, just has layout, no data an
 
     public class HeaderItem extends BaseItem {
         @Override
-        public int getType() {
+        public int getLayout() {
             return R.layout.item_header;
         }
     }
@@ -168,7 +165,7 @@ ImageItem:
 
     public class ImageItem extends BaseItem {
         @Override
-        public int getType() {
+        public int getLayout() {
             return R.layout.item_image;
         }
 
@@ -340,7 +337,7 @@ Then call `adapter.addItem()`, `adapter.removeItem()`, `adapter.notifyItemChange
 License
 -------
 
-    Copyright 2016 baurine.
+    Copyright 2017 baurine.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

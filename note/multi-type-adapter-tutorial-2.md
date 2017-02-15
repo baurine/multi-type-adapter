@@ -2,23 +2,23 @@
 
 ## 大纲
 
-1. 实现篇
-   1. 一步一步实现极简的 adapter
+1. [实现篇](./multi-type-adapter-tutorial-1.md#实现篇)
+   1. [一步一步实现极简的 adapter](./multi-type-adapter-tutorial-1.md#一步一步实现极简的-adapter)
 
-1. 使用篇
-   1. 设置 RecyclerView 和 SwipeRefreshLayout
-   1. 实现各种状态型 item
-   1. 实现刷新
-   1. 实现加载更多
-   1. 为 item 增加事件处理
-   1. 获取 item 的 position
-   1. item 与 model 的关系
+1. [使用篇](#使用篇)
+   1. [设置 RecyclerView 和 SwipeRefreshLayout](#设置-recyclerView-和-swipeRefreshLayout)
+   1. [实现各种状态类 item](#实现各种状态类-item)
+   1. [实现刷新](#实现刷新)
+   1. [实现加载更多](#实现加载更多)
+   1. [为 item 增加事件处理](#为-item-增加事件处理)
+   1. [获取 item 的 position](#获取-item-的-position)
+   1. [item 与 model 的关系](#item-与-model-的关系)
 
-1. 优化篇
-   1. 将 adapter 独立成库
-   1. 使用 MVP 简化 Activity 的逻辑
+1. [优化篇](#优化篇)
+   1. [将 adapter 独立成库](#将-adapter-独立成库)
+   1. [使用 MVP 简化 Activity 的逻辑](#使用-mvp-简化-activity-的逻辑)
 
-1. 总结篇
+1. [总结篇](#总结篇)
 
 ------------------------
 
@@ -1011,9 +1011,9 @@ ImageModel：
     @GET("feeds")
     Call<List<BaseModel>> getFeeds(@Query("page") int page);
 
-再自定义一个 BaseModel 的 JSON 解析器 BaesModelAdapter：
+再自定义一个 BaseModel 的 JSON 解析器 BaseModelAdapter：
 
-    public static class BaesModelAdapter implements JsonDeserializer<BaseModel> {
+    public static class BaseModelAdapter implements JsonDeserializer<BaseModel> {
         @Override
         public BaseModel deserialize(JsonElement json, Type typeOfT,
                                      JsonDeserializationContext context)
@@ -1036,7 +1036,7 @@ ImageModel：
 
     Gson gson = new GsonBuilder()
             .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
-            .registerTypeAdapter(BaesModel.class, new BaseModelAdapter())
+            .registerTypeAdapter(BaseModel.class, new BaseModelAdapter())
             .create();
 
 但是在这个例子中，我们没有使用网络 API，所以只好用一个 ModelFaker 来模拟 BaseModelAdapter 的解析过程，仍然使用随机数产生 type：
@@ -1248,7 +1248,7 @@ MainPresenter 的实现差不多了，我们再回头看 MainActivity，在 Main
 
 虽然还有继续优化的空间和一些小 bug (比如 `hasMoreData` 变量其实是可以不需要的)，但我想还是就此打住吧，我想截止到目前为止，整个流程已经足够清楚了，剩下的就交给你们自己去探索了。
 
-## 总结
+## 总结篇
 
 最后，我总结一下，我们要实现的重心 Item 在这里到底是一种什么角色。我认为它是一个 wrapper，它将 layout/data/event handler 包裹在一起，但只有 layout 是必须的，data 和 event handler 是可选的，因此，一般来说 item 有四种形态：
 

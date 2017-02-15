@@ -16,11 +16,11 @@
 
 直到我开始学习 databinding 框架 (我现在有一种赶脚，它简直就是人民，哦，不对，android 开发者的大救星啊)，在 [棉花糖给 Android 带来的 Data Bindings](https://realm.io/cn/news/data-binding-android-boyar-mount/) 这篇文章中说到，databinding 可以轻松地实现多类型的 viewholder 时，我在想，我干嘛不用它来解决这个世界性的大难题呢(呵呵)。当下就立马开始尝试，实际，只要你写起来，就会发现，实现起来是非常 easy 和自然的 (但我不知道为什么没有人这么去做，我 google/github 了也没看到类似的，让我陷入了深深地怀疑，难道是我做错了，还恳请各位大神来 review 我的代码并打脸我)。
 
-使用 databinding 框架实现的 adapter 只有 100 行左右的代码，单一 java 文件，理解起来零难度。从此你就可以忘记 viewholder 了。
+使用 databinding 框架实现的 adapter 只有 100 行左右的代码，单一 java 文件，理解起来非常容易。从此你就可以忘记 viewholder 了。
 
 当然，根据代码守恒定律，代码总量总体是恒定的，我们能使用这么少的代码，背后是 databinding 框架为我们生成的大量代码，眼不见，心不烦，更何况这是 google 为我们生成的代码。
 
-是不是已经按捺不住激动的心情啦。好吧，我们言归正转。其实在之前我已经写 [一篇文章](https://github.com/baurine/android-data-binding-study/blob/master/multi-type-adapter.md) 来阐述这种思想，并写了一个简陋的例子，但后来我还是觉得这个例子太简单了，说服力不够，没有解决很多人关心的问题，在每个通用型 adapter 的文章下面，都有一堆人在问，如果用你这个 adapter，怎么刷新，怎么加载更多，怎么实现 header item，怎么实现 footer item。那么，我就决定，写一个完整的例子，一次性解决你们所有的疑问。并且，我把这个过程写下来，如何一步步实现这些功能，如果一步步重构代码，使代码优雅。最后，即使没有打动你投入 databinding 的怀抱，我觉得你也可以学习到很多。
+是不是已经按捺不住激动的心情啦。好吧，我们言归正转。其实在之前我已经写 [一篇文章](https://github.com/baurine/android-data-binding-study/blob/master/note/multi-type-adapter.md) 来阐述这种思想，并写了一个简陋的例子，但后来我还是觉得这个例子太简单了，说服力不够，没有解决很多人关心的问题，在每个通用型 adapter 的文章下面，都有一堆人在问，如果用你这个 adapter，怎么刷新，怎么加载更多，怎么实现 header item，怎么实现 footer item。那么，我就决定，写一个完整的例子，一次性解决你们所有的疑问。并且，我把这个过程写下来，如何一步步实现这些功能，如何一步步重构代码，使代码优雅。最后，即使没有打动你投入 databinding 的怀抱，我觉得你也可以学习到很多。
 
 先来看一下最后的效果，UI 就别吐槽了，毕竟对于工程师来说，独立开发一个应用，最大的问题就是选颜色了(其实是我啦)，本来想用一个 GIF 来展示所有效果的，但一个 GIF 体积太大了，所以就拆成了三个：
 
@@ -46,30 +46,31 @@
 1. 支持 footer item，包括 3 种状态：加载中，出错并允许重试，没有更多数据
 1. 支持多种数据类型的 item，我们在这个例子中只展示了 ImageItem 和 TextItem 两种类型
 
-[下载 apk](https://github.com/baurine/multi-type-adapter/releases/tag/v1.0.5_release)  
+[下载 apk](https://github.com/baurine/multi-type-adapter/releases/tag/v1.0.5_release) | [项目地址](https://github.com/baurine/multi-type-adapter)  
 
-[项目地址](https://github.com/baurine/multi-type-adapter)  
 这个项目中有两个文件夹，MultiTyepAdapterSample 和 MultiTypeAdapterTutorial，两者代码是几乎相同的，后者是我为了写这篇文章重新创建的，每一个关键步骤我都打好了 tag，以方便读者进行对照。
+
+PS: 下面的内容完全是基于 databinding 思想来展开讲的，所以如果你对它不感兴趣，那么下面的内容对你就没什么帮助。另外，文章比较长且啰索 (力争讲解到每一个细节)，需要比较充裕的时间来阅读和练习。如果你对 databinding 感兴趣，欢迎提交 issue 探讨。
 
 ## 大纲
 
-1. 实现篇
-   1. 一步一步实现极简的 adapter
+1. [实现篇](#实现篇)
+   1. [一步一步实现极简的 adapter](#一步一步实现极简的-adapter)
 
-1. 使用篇
-   1. 设置 RecyclerView 和 SwipeRefreshLayout
-   1. 实现各种状态型 item
-   1. 实现刷新
-   1. 实现加载更多
-   1. 为 item 增加事件处理
-   1. 获取 item 的 position
-   1. item 与 model 的关系
+1. [使用篇](./multi-type-adapter-tutorial-2.md#使用篇)
+   1. [设置 RecyclerView 和 SwipeRefreshLayout](./multi-type-adapter-tutorial-2.md#设置-recyclerView-和-swipeRefreshLayout)
+   1. [实现各种状态类 item](./multi-type-adapter-tutorial-2.md#实现各种状态类-item)
+   1. [实现刷新](./multi-type-adapter-tutorial-2.md#实现刷新)
+   1. [实现加载更多](./multi-type-adapter-tutorial-2.md#实现加载更多)
+   1. [为 item 增加事件处理](./multi-type-adapter-tutorial-2.md#为-item-增加事件处理)
+   1. [获取 item 的 position](./multi-type-adapter-tutorial-2.md#获取-item-的-position)
+   1. [item 与 model 的关系](./multi-type-adapter-tutorial-2.md#item-与-model-的关系)
 
-1. 优化篇
-   1. 将 adapter 独立成库
-   1. 使用 MVP 简化 Activity 的逻辑
+1. [优化篇](./multi-type-adapter-tutorial-2.md#优化篇)
+   1. [将 adapter 独立成库](./multi-type-adapter-tutorial-2.md#将-adapter-独立成库)
+   1. [使用 MVP 简化 Activity 的逻辑](./multi-type-adapter-tutorial-2.md#使用-mvp-简化-activity-的逻辑)
 
-1. 总结篇
+1. [总结篇](./multi-type-adapter-tutorial-2.md#总结篇)
 
 ------------------------
 
@@ -151,6 +152,8 @@
           return items.get(position).getType();
         }
     }
+
+(2017/2/15 Update: 由于 `getType()` 实际是应该返回一个 xml layout 的，为了让这个方法名意义更明确，从 1.0.7 开始，这个方法重命名为 `getLayout()`，但整个教程仍然保留为 `getType()`)
 
 因为 header 和 footer，尤其是 footer，只是单纯地用来显示 正在 loading 等一些状态，我们很容易把它跟常规的数据 item 区别对待，但是，实际上我们可以把它看成一个伪 item，没有数据，只有布局的 item。我们分别实现只有布局的 HeaerItem 和 FooterItem，并在合适的时机加到 items 里面或从 items 里移除，就可以控制 header 和 footer 的显示与隐藏了。
 
@@ -378,7 +381,7 @@ OK，至此，我们仅仅实现了 adapter 的 `getItemCount()` 和 `getItemVie
         </LinearLayout>
     </layout>
 
-其中 ImageView 的 imageUrl/error/placeholder 属性是使用[强大的 BindingAdapter](https://github.com/baurine/android-data-binding-study/blob/master/note.md) 实现的，代码如下：
+其中 ImageView 的 imageUrl/error/placeholder 属性是使用 [强大的 BindingAdapter](https://github.com/baurine/android-data-binding-study/blob/master/note/powerful-binding-adapter.md) 实现的，代码如下：
 
     // BindingUtil.java
     public class BindingUtil {
@@ -631,6 +634,6 @@ ImageViewHolder 和 TextViewHolder 从形式上已经是一样的了，那我们
         }
     }
 
-从此，我们就可以和 viewholder 说拜拜了，我们的重心转移到实现一个又一个的 Item 上，而 Item 是轻量的，我们约定 (暂时地) 在 xml 中统一使用 variable name 为 item，那么 Item 只需要实现 IItem 的 `getType()` 方法就行了。
+从此，我们就可以和 viewholder 说拜拜了，我们的重心转移到实现一个又一个的 Item 上，而 Item 是极为轻量的。
 
 至此，我们一步一步地实现了这个目前还不到 100 行的极简 adapter，那如何使用它来，来轻松地实现 header, footer 呢，且听 [下回](./multi-type-adapter-tutorial-2.md) 分解。
