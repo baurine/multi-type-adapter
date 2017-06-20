@@ -1248,6 +1248,8 @@ MainPresenter 的实现差不多了，我们再回头看 MainActivity，在 Main
 
 虽然还有继续优化的空间和一些小 bug (比如 `hasMoreData` 变量其实是可以不需要的)，但我想还是就此打住吧，我想截止到目前为止，整个流程已经足够清楚了，剩下的就交给你们自己去探索了。
 
+另外，从严格意义上说，特别是从测试角度，这个 MainPresenter 实际并不是一个真正的 Presenter，严格意义上的 Presenter 不应该包括 android framework 的 api (方便本地测试)，而毫无疑问这里的 adapter 就属于 android framework 的内容，如果要继续改进的话，我会把 adapter 的操作再封装到一个单独的类中，从 MainPresenter 中抽离，这样 MainPresenter 就更简洁了。
+
 ## 总结篇
 
 最后，我总结一下，我们要实现的重心 Item 在这里到底是一种什么角色。我认为它是一个 wrapper，它将 layout/data/event handler 包裹在一起，但只有 layout 是必须的，data 和 event handler 是可选的，因此，一般来说 item 有四种形态：
