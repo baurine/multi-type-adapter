@@ -14,7 +14,7 @@
 
 但是，由于受限于传统的 android 开发，即使他们已经做得很极致了，但用起来还是不够爽，我们还是要不停地去实现 ViewHolder。
 
-直到我开始学习 databinding 框架 (我现在有一种赶脚，它简直就是人民，哦，不对，android 开发者的大救星啊)，在 [棉花糖给 Android 带来的 Data Bindings](https://realm.io/cn/news/data-binding-android-boyar-mount/) 这篇文章中说到，databinding 可以轻松地实现多类型的 viewholder 时，我在想，我干嘛不用它来解决这个世界性的大难题呢(呵呵)。当下就立马开始尝试，实际，只要你写起来，就会发现，实现起来是非常 easy 和自然的 (但我不知道为什么没有人这么去做，我 google/github 了也没看到类似的，让我陷入了深深地怀疑，难道是我做错了，还恳请各位大神来 review 我的代码并打脸我)。
+直到我开始学习 databinding 框架，在 [棉花糖给 Android 带来的 Data Bindings](https://realm.io/cn/news/data-binding-android-boyar-mount/) 这篇文章中说到，databinding 可以轻松地实现多类型的 viewholder 时，我在想，我干嘛不用它来解决这个世界性的大难题呢(呵呵)。当下就立马开始尝试，实际，只要你写起来，就会发现，实现起来是非常 easy 和自然的。
 
 使用 databinding 框架实现的 adapter 只有 100 行左右的代码，单一 java 文件，理解起来非常容易。从此你就可以忘记 viewholder 了。
 
